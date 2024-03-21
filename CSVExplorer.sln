@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVExplorer", "CSVExplorer\CSVExplorer.csproj", "{A7100CB2-853D-43F1-9626-02C3E067BD91}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVExplorer.Tests", "CSVExplorer.Tests\CSVExplorer.Tests.csproj", "{B73FA7F5-481E-420A-859A-B8BC26DCF59C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{A7100CB2-853D-43F1-9626-02C3E067BD91}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A7100CB2-853D-43F1-9626-02C3E067BD91}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A7100CB2-853D-43F1-9626-02C3E067BD91}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B73FA7F5-481E-420A-859A-B8BC26DCF59C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B73FA7F5-481E-420A-859A-B8BC26DCF59C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B73FA7F5-481E-420A-859A-B8BC26DCF59C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B73FA7F5-481E-420A-859A-B8BC26DCF59C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

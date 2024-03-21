@@ -2,5 +2,6 @@
 
 public interface IFileReader
 {
-	string[] ReadFile(string path);
+	string GetFilePathFromUser();
+	List<string> ReadFile(string filePath);
 }
