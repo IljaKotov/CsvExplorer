@@ -2,11 +2,11 @@
 
 public class ArgumentException(string message) : Exception(message)
 {
-	public static void ThrowIfNullOrWhiteSpace(string value, string paramName)
+	public static void ThrowIfNullOrWhiteSpace(string[]? value, string paramName)
 	{
-		if (string.IsNullOrWhiteSpace(value))
+		if (value is null || value.Length == 0)
 		{
-			throw new ArgumentException($"Parameter {paramName} cannot be null or whitespace.");
+			throw new ArgumentException($"Parameter {paramName} cannot be null or empty.");
 		}
 	}
 }

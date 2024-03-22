@@ -2,8 +2,16 @@
 
 namespace CSVExplorer.Models;
 
-public class ConsolePrintResult : IConsolePrintResult
+internal class ConsolePrintResult : IConsolePrintResult
 {
+	public void PrintAllResults(AnalysisResult result)
+	{
+		PrintMinSum(result.MinIndex, result.MinRowSum);
+		PrintMaxSum(result.MaxIndex, result.MaxRowSum);
+
+		if (result.InvalidRowsIndexes is not null)
+			PrintNonNumericRows(result.InvalidRowsIndexes);
+	}
 	public void PrintMaxSum(int rowNumber, double sum)
 	{
 		Console.WriteLine(rowNumber != -1
@@ -24,16 +32,5 @@ public class ConsolePrintResult : IConsolePrintResult
 
 		foreach (var rowNumber in rowNumbers)
 			Console.WriteLine($"\t row {rowNumber}");
-	}
-
-	public void PrintAllResults(AnalyzingResult result)
-	{
-		if (result.InvalidRows is not null)
-		{
-			PrintNonNumericRows(result.InvalidRows);
-		}
-
-		PrintMinSum(result.MinRowIndex, result.MinRowSum);
-		PrintMaxSum(result.MaxRowIndex, result.MaxRowSum);
 	}
 }

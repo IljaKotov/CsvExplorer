@@ -1,12 +1,13 @@
-﻿using CSVExplorer.Interfaces;
+﻿using System.Globalization;
+using CSVExplorer.Interfaces;
 
 namespace CSVExplorer.Models;
 
-internal class CsvRowAnalyzer : ICsvRowAnalyzer
+internal class RowAnalyzer : IRowAnalyzer
 {
 	private const char Separator = ',';
 
-	public (double, bool) CalculateRowSumAndValidity(string row)
+	public (double, bool) TryGetRowSum(string row)
 	{
 		var elements = row.Split(Separator).ToList();
 		double sumRowItems = 0;
@@ -14,7 +15,7 @@ internal class CsvRowAnalyzer : ICsvRowAnalyzer
 
 		foreach (var element in elements)
 		{
-			if (double.TryParse(element, out var number))
+			if (double.TryParse(element, NumberStyles.Any, CultureInfo.InvariantCulture, out var number))
 			{
 				sumRowItems += number;
 			}

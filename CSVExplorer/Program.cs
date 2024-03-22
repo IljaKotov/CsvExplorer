@@ -1,11 +1,10 @@
-﻿// See https://aka.ms/new-console-template for more information
-
+﻿using CSVExplorer.Interfaces;
 using CSVExplorer.Models;
 
-var csvHelper = new Helper();
-csvHelper.Run();
+IRowAnalyzer rowAnalyzer = new RowAnalyzer();
+IFileDataAnalyzer fileDataAnalyzer = new FileDataAnalyzer(rowAnalyzer);
+IConsolePrintResult printResult = new ConsolePrintResult();
 
-//D:\ПРОЕКТИ\Education\TestFile1.csv
-//D:\ПРОЕКТИ\Education\CSVExplorer\CSVExplorer.Tests\TestFile.csv
-//D:\ПРОЕКТИ\Education\CSVExplorer\CSVExplorer.Tests\TestFiles\TestFile_MultiRow.csv
-//D:\ПРОЕКТИ\Education\CSVExplorer\CSVExplorer.Tests\TestFiles\TestFile_SingleNotNumericRow.csv
+var runner = new CsvAnalyzerRunner(fileDataAnalyzer, printResult);
+
+runner.RunWithConsole();
