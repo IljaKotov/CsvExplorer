@@ -9,9 +9,9 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Content Include="..\.dockerignore">
-        <Link>.dockerignore</Link>
-      </Content>
+      <PackageReference Include="Cocona" Version="2.2.0" />
+      <PackageReference Include="Cocona.Lite" Version="2.2.0" />
+      <PackageReference Include="Microsoft.Extensions.Hosting" Version="8.0.0" />
     </ItemGroup>
 
 </Project>

@@ -1,22 +1,39 @@
-﻿using CSVExplorer.Interfaces;
+﻿using CSVExplorer.Exceptions;
+using CSVExplorer.Interfaces;
 
 namespace CSVExplorer.Models;
 
 internal class FileDataService : IFileDataService
 {
-	public async Task<List<string>> GetAllFileRows(string filePath)
+	public async IAsyncEnumerable<string> GetAllFileRows(string filePath)
 	{
-		Exceptions.FileNotFoundException.ThrowIfFileNotFound(filePath);
+		ValidateFilePath(filePath);
 
-		try
-		{
-			return new List<string>(await File.ReadAllLinesAsync(filePath));
-		}
-		catch (Exception ex)
-		{
-			Exceptions.FileReadException.ThrowIfFileReadError(ex);
+		using var reader = new StreamReader(filePath);
 
-			return new List<string>();
+		while (!reader.EndOfStream)
+		{
+			string? line;
+
+			try
+			{
+				if ((line = await reader.ReadLineAsync()) is null)
+					break;
+			}
+			catch (Exception ex)
+			{
+				FileReadException.ThrowIfFileReadError(ex);
+
+				yield break;
+			}
+
+			yield return line;
 		}
+	}
+	
+	private static void ValidateFilePath(string filePath)
+	{
+		 if (File.Exists(filePath) is false)
+			throw new FileNotFoundException();
 	}
 }

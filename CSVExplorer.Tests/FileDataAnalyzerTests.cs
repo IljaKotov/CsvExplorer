@@ -14,20 +14,37 @@ public class FileDataAnalyzerTests
 
 	[Fact]
 	[DisplayName("ProcessCsvFile with empty data. Should throw exception")]
-	public void ProcessCsvFile_EmptyData_ThrowsException()
+	public async Task Analyze_EmptyData_ThrowsException()
 	{
-		var rows = new List<string>();
-		Assert.Throws<EmptyFileException>(() => _fileDataAnalyzer.Analyze(rows));
+		var rows = new List<string>().ToAsyncEnumerable();
+		await Assert.ThrowsAsync<EmptyFileException>(() => _fileDataAnalyzer.Analyze(rows));
+	}
+
+	[Fact]
+	[DisplayName("GetAllFileRows throws Exception When file is unfounded")]
+	public async Task GetAllFileRows_NonExistingFile_ThrowsException()
+	{
+		const string filePath = "non-existing-file.csv";
+
+		var provider = new FileDataService();
+
+		await Assert.ThrowsAsync<FileNotFoundException>
+		(async () =>
+		{
+			await foreach (var _ in provider.GetAllFileRows(filePath))
+			{
+			}
+		});
 	}
 
 	[Theory]
 	[DisplayName("Analyze test cases with depending data. Should return correct result")]
-	[MemberData(nameof(TestCaseGenerator.GetTestData), 
+	[MemberData(nameof(TestCaseGenerator.GetTestData),
 		MemberType = typeof(TestCaseGenerator))]
-	public void Analyze_SomeDataCases_ReturnsCorrectResult(TestCase testCase)
+	public async Task Analyze_SomeDataCases_ReturnsCorrectResult(TestCase testCase)
 	{
-		var result = _fileDataAnalyzer.Analyze(testCase.InputRows.ToList());
-	
+		var result = await _fileDataAnalyzer.Analyze(testCase.InputRows.ToAsyncEnumerable());
+
 		result.MinRowSum.Should().Be(testCase.MinSum);
 		result.MaxRowSum.Should().Be(testCase.MaxSum);
 		result.MinIndex.Should().Be(testCase.MinRowIndex);

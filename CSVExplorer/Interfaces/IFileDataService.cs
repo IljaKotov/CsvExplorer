@@ -2,5 +2,5 @@
 
 public interface IFileDataService
 {
-	public Task<List<string>> GetAllFileRows(string filePath);
+	public IAsyncEnumerable<string> GetAllFileRows(string filePath);
 }

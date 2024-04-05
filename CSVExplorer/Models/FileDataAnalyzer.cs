@@ -3,33 +3,52 @@ using CSVExplorer.Interfaces;
 
 namespace CSVExplorer.Models;
 
-internal class FileDataAnalyzer(IRowAnalyzer rowAnalyzer) : IFileDataAnalyzer
+internal class FileDataAnalyzer : IFileDataAnalyzer
 {
 	private readonly List<int> _invalidRows = new();
+	private readonly IRowAnalyzer _rowAnalyzer;
 	private double _minSum = double.MaxValue;
 	private double _maxSum = double.MinValue;
 	private int _minRowIndex = -1;
 	private int _maxRowIndex = -1;
 
-	public AnalysisResult Analyze(List<string> csvRows)
+	public FileDataAnalyzer(IRowAnalyzer rowAnalyzer)
 	{
-		EmptyFileException.ThrowIfFileIsEmpty(csvRows);
+		_rowAnalyzer = rowAnalyzer;
+	}
 
-		AnalyzeRows(csvRows);
+	public async Task<AnalysisResult> Analyze(IAsyncEnumerable<string> csvRows)
+	{
+		var enumerator = csvRows.GetAsyncEnumerator();
+
+		await ValidateIsNotEmptyAsync(enumerator);
+
+		var rowIndex = 0;
+
+		do
+		{
+			rowIndex++;
+			var row = enumerator.Current;
+			var rowResult = _rowAnalyzer.TryGetRowSum(row);
+
+			if (rowResult.IsRowValid is false)
+			{
+				_invalidRows.Add(rowIndex);
+			}
+			else
+			{
+				CheckMinMaxValues(rowResult.RowSum, rowIndex);
+			}
+		} while (await enumerator.MoveNextAsync());
 
 		return CreateResultRecord();
 	}
 
-	private void AnalyzeRows(List<string> csvRows)
+	private async Task ValidateIsNotEmptyAsync(IAsyncEnumerator<string> enumerator)
 	{
-		for (var i = 0; i < csvRows.Count; i++)
+		if (await enumerator.MoveNextAsync() is false)
 		{
-			var (sumItems, isValid) = rowAnalyzer.TryGetRowSum(csvRows[i]);
-
-			if (isValid is false)
-				_invalidRows.Add(i + 1);
-			else
-				CheckMinMaxValues(sumItems, i + 1);
+			throw new EmptyFileException();
 		}
 	}
 
@@ -41,8 +60,10 @@ internal class FileDataAnalyzer(IRowAnalyzer rowAnalyzer) : IFileDataAnalyzer
 			_minRowIndex = rowIndex;
 		}
 
-		if ((sum > _maxSum) is false)
+		if (sum <= _maxSum)
+		{
 			return;
+		}
 
 		_maxSum = sum;
 		_maxRowIndex = rowIndex;

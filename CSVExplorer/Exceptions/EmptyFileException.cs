@@ -1,14 +1,10 @@
 ﻿namespace CSVExplorer.Exceptions;
 
-public class EmptyFileException(string message) : Exception(message)
+public class EmptyFileException : Exception
 {
 	private const string ExceptionMessage = "File is empty.";
 
-	public static void ThrowIfFileIsEmpty(List<string> lines)
+	public EmptyFileException() : base(ExceptionMessage)
 	{
-		if (lines.Count == 0)
-		{
-			throw new EmptyFileException(ExceptionMessage);
-		}
 	}
 }

@@ -7,26 +7,30 @@ internal class RowAnalyzer : IRowAnalyzer
 {
 	private const char Separator = ',';
 
-	public (double, bool) TryGetRowSum(string row)
+	public AnalysisRowResult TryGetRowSum(string row)
 	{
 		var elements = row.Split(Separator).ToList();
-		double sumRowItems = 0;
-		var isRowValid = true;
+
+		var result = new AnalysisRowResult
+		{
+			RowSum = 0,
+			IsRowValid = true
+		};
 
 		foreach (var element in elements)
 		{
 			if (double.TryParse(element, NumberStyles.Any, CultureInfo.InvariantCulture, out var number))
 			{
-				sumRowItems += number;
+				result.RowSum += number;
 			}
 			else
 			{
-				isRowValid = false;
+				result.IsRowValid = false;
 
 				break;
 			}
 		}
 
-		return (sumRowItems, isRowValid);
+		return result;
 	}
 }

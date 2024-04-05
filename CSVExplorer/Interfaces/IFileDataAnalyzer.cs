@@ -4,5 +4,5 @@ namespace CSVExplorer.Interfaces;
 
 public interface IFileDataAnalyzer
 {
-	public AnalysisResult Analyze(List<string> csvRows);
+	public Task<AnalysisResult> Analyze(IAsyncEnumerable<string> csvRows);
 }

@@ -2,16 +2,22 @@
 
 namespace CSVExplorer.Models;
 
-internal class CommandLineFilePathProvider(string[] args) : IFilePathProvider
+internal class CommandLineFilePathProvider : IFilePathProvider
 {
+	private readonly string[] _args;
+
+	public CommandLineFilePathProvider(string[] args)
+	{
+		_args = args;
+	}
+
 	public string GetFilePath()
 	{
-		const string exMsg = "'file path'";
-
-		if (args.Length > 0)
-			return args[0];
-
-		Exceptions.ArgumentException.ThrowIfNullOrWhiteSpace(args, exMsg);
+		if (_args.Length > 1 && File.Exists(_args[1]) &&
+			Path.GetExtension(_args[1]).Equals(".csv", StringComparison.OrdinalIgnoreCase))
+		{
+			return _args[1];
+		}
 
 		return string.Empty;
 	}

@@ -1,6 +1,8 @@
-﻿namespace CSVExplorer.Interfaces;
+﻿using CSVExplorer.Models;
+
+namespace CSVExplorer.Interfaces;
 
 public interface IRowAnalyzer
 {
-	public (double, bool) TryGetRowSum(string row);
+	public AnalysisRowResult TryGetRowSum(string row);
 }
