@@ -41,6 +41,3 @@ app.AddCommand("analyze", async (IAnalyzerRunner runner, [Option("file")] string
 }).WithDescription("Run the analyzer");
 
 await app.RunAsync();
-
-//D:\ПРОЕКТИ\Education\CsvExplorer\CsvExplorer
-//D:\ПРОЕКТИ\Education\TestFile1.csv
