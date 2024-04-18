@@ -1,44 +1,35 @@
 ﻿using Cocona;
-using Cocona.Builder;
-using Cocona.Hosting;
 using CSVExplorer.Interfaces;
 using CSVExplorer.Models;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
-
-/*var serviceCollection = new ServiceCollection();
-
-ConfigureServices(serviceCollection);
-
-var serviceProvider = serviceCollection.BuildServiceProvider();
-
-var runner = ServiceProviderServiceExtensions.GetRequiredService<IAnalyzerRunner>(serviceProvider);
-runner.Run();*/
 
 var builder = CoconaApp.CreateBuilder();
-ConfigureServices(builder.Services);
+
+builder.Services.AddTransient<IConsolePrintResult, ConsolePrintResult>();
+builder.Services.AddTransient<IFilePathProvider, CombinedFilePathProvider>();
+builder.Services.AddTransient<IFileDataService, FileDataService>();
+builder.Services.AddTransient<IRowAnalyzer, RowAnalyzer>();
+builder.Services.AddTransient<IFileDataAnalyzer, FileDataAnalyzer>();
+builder.Services.AddTransient<IAnalyzerRunner, AnalyzerRunner>();
+builder.Services.AddTransient(_ => new CommandLineFilePathProvider(args));
+builder.Services.AddTransient<ConsoleFilePathProvider>();
 
 var app = builder.Build();
 
-app.AddCommand("run", async (IAnalyzerRunner runner) => await runner.RunAsync()).WithDescription("Run the analyzer");
+app.AddCommand("run", async (IAnalyzerRunner runner, [Option("file")] string? filePath) =>
+{
+	if (string.IsNullOrWhiteSpace(filePath) || !File.Exists(filePath))
+
+	{
+		var provider = ServiceProviderServiceExtensions.GetRequiredService<IFilePathProvider>(builder.Services.BuildServiceProvider());
+		filePath = provider.GetFilePath();
+	}
+	await runner.RunAsync(filePath);
+}).WithDescription("Run the analyzer");
 
 app.Run();
 
-	
 
-	void ConfigureServices(IServiceCollection services)
-	{
-		string[] args = Environment.GetCommandLineArgs();
-
-		services.AddTransient<IConsolePrintResult, ConsolePrintResult>();
-		services.AddTransient<IFilePathProvider, CombinedFilePathProvider>();
-		services.AddTransient<IFileDataService, FileDataService>();
-		services.AddTransient<IRowAnalyzer, RowAnalyzer>();
-		services.AddTransient<IFileDataAnalyzer, FileDataAnalyzer>();
-		services.AddTransient<IAnalyzerRunner, AnalyzerRunner>();
-		services.AddTransient(_ => new CommandLineFilePathProvider(args));
-		services.AddTransient<ConsoleFilePathProvider>();
-	}
 //D:\ПРОЕКТИ\Education\CSVExplorer\CSVExplorer
 //D:\ПРОЕКТИ\Education\TestFile1.csv
 

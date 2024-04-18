@@ -2,6 +2,5 @@
 
 public interface IAnalyzerRunner
 {
-	public Task RunAsync();
 	public Task RunAsync(string filePath);
 }
