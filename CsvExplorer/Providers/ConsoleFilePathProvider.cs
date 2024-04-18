@@ -1,6 +1,6 @@
 ﻿using CSVExplorer.Interfaces;
 
-namespace CSVExplorer.Models;
+namespace CSVExplorer.Providers;
 
 internal class ConsoleFilePathProvider : IFilePathProvider
 {

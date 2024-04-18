@@ -1,7 +1,8 @@
 ﻿using CSVExplorer.Exceptions;
 using CSVExplorer.Interfaces;
+using CSVExplorer.Models;
 
-namespace CSVExplorer.Models;
+namespace CSVExplorer.Services;
 
 internal class FileDataAnalyzer : IFileDataAnalyzer
 {
@@ -19,37 +20,25 @@ internal class FileDataAnalyzer : IFileDataAnalyzer
 
 	public async Task<AnalysisResult> Analyze(IAsyncEnumerable<string> csvRows)
 	{
-		var enumerator = csvRows.GetAsyncEnumerator();
-
-		await ValidateIsNotEmptyAsync(enumerator);
-
 		var rowIndex = 0;
+		var hasRows = false;
 
-		do
+		await foreach (var row in csvRows)
 		{
+			hasRows = true;
 			rowIndex++;
-			var row = enumerator.Current;
 			var rowResult = _rowAnalyzer.TryGetRowSum(row);
 
 			if (rowResult.IsRowValid is false)
-			{
 				_invalidRows.Add(rowIndex);
-			}
 			else
-			{
 				CheckMinMaxValues(rowResult.RowSum, rowIndex);
-			}
-		} while (await enumerator.MoveNextAsync());
+		}
+
+		if (hasRows is false)
+			throw new EmptyFileException();
 
 		return CreateResultRecord();
-	}
-
-	private async Task ValidateIsNotEmptyAsync(IAsyncEnumerator<string> enumerator)
-	{
-		if (await enumerator.MoveNextAsync() is false)
-		{
-			throw new EmptyFileException();
-		}
 	}
 
 	private void CheckMinMaxValues(double sum, int rowIndex)
@@ -61,9 +50,7 @@ internal class FileDataAnalyzer : IFileDataAnalyzer
 		}
 
 		if (sum <= _maxSum)
-		{
 			return;
-		}
 
 		_maxSum = sum;
 		_maxRowIndex = rowIndex;

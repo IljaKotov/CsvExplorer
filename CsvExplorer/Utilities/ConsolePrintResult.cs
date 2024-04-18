@@ -1,6 +1,7 @@
 ﻿using CSVExplorer.Interfaces;
+using CSVExplorer.Models;
 
-namespace CSVExplorer.Models;
+namespace CSVExplorer.Utilities;
 
 internal class ConsolePrintResult : IConsolePrintResult
 {
@@ -16,22 +17,22 @@ internal class ConsolePrintResult : IConsolePrintResult
 	private static void PrintMaxSum(int rowNumber, double sum)
 	{
 		Console.WriteLine(rowNumber != -1
-			? $"Row {rowNumber} has the maximum sum of {sum}"
-			: "There are no valid rows in the file");
+			? $"\t Row {rowNumber} has the maximum sum of {sum}"
+			: "\t There are no valid rows in the file");
 	}
 
 	private static void PrintMinSum(int rowNumber, double sum)
 	{
 		Console.WriteLine(rowNumber != -1
-			? $"Row {rowNumber} has the minimum sum of {sum}"
-			: "There are no valid rows in the file");
+			? $"\t Row {rowNumber} has the minimum sum of {sum}"
+			: "\t There are no valid rows in the file");
 	}
 
 	private static void PrintNonNumericRows(List<int> rowNumbers)
 	{
-		Console.WriteLine("The following rows contain non-numeric elements:");
+		Console.WriteLine("\t The following rows contain non-numeric elements:");
 
 		foreach (var rowNumber in rowNumbers)
-			Console.WriteLine($"\t row {rowNumber}");
+			Console.WriteLine($"\t \t row {rowNumber}");
 	}
 }

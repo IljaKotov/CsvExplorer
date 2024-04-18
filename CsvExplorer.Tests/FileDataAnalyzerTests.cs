@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel;
 using CSVExplorer.Exceptions;
 using CSVExplorer.Interfaces;
-using CSVExplorer.Models;
+using CSVExplorer.Services;
 using CSVExplorer.Tests.TestCases;
 using FluentAssertions;
 
@@ -28,13 +28,8 @@ public class FileDataAnalyzerTests
 
 		var provider = new FileDataService();
 
-		await Assert.ThrowsAsync<FileNotFoundException>
-		(async () =>
-		{
-			await foreach (var _ in provider.GetAllFileRows(filePath))
-			{
-			}
-		});
+		await Assert.ThrowsAsync<FileNotFoundException>(() =>
+			Task.Run(async () => await provider.GetAllFileRows(filePath).ToListAsync()));
 	}
 
 	[Theory]

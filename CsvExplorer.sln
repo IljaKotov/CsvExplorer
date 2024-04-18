@@ -1,8 +1,8 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVExplorer", "CSVExplorer\CSVExplorer.csproj", "{A7100CB2-853D-43F1-9626-02C3E067BD91}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvExplorer", "CsvExplorer\CsvExplorer.csproj", "{A7100CB2-853D-43F1-9626-02C3E067BD91}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CSVExplorer.Tests", "CSVExplorer.Tests\CSVExplorer.Tests.csproj", "{B73FA7F5-481E-420A-859A-B8BC26DCF59C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CsvExplorer.Tests", "CsvExplorer.Tests\CsvExplorer.Tests.csproj", "{B73FA7F5-481E-420A-859A-B8BC26DCF59C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

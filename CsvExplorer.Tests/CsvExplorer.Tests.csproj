@@ -7,6 +7,7 @@
 
         <IsPackable>false</IsPackable>
         <IsTestProject>true</IsTestProject>
+        <RootNamespace>CSVExplorer.Tests</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
@@ -28,7 +29,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\CSVExplorer\CSVExplorer.csproj" />
+      <ProjectReference Include="..\CsvExplorer\CsvExplorer.csproj" />
     </ItemGroup>
 
 </Project>

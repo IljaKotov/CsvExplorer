@@ -1,31 +1,31 @@
 ﻿using System.Globalization;
 using CSVExplorer.Interfaces;
+using CSVExplorer.Models;
 
-namespace CSVExplorer.Models;
+namespace CSVExplorer.Services;
 
 internal class RowAnalyzer : IRowAnalyzer
 {
-	private const char Separator = ',';
-
 	public AnalysisRowResult TryGetRowSum(string row)
 	{
-		var elements = row.Split(Separator).ToList();
-
-		var result = new AnalysisRowResult
+		var separators = new[]
 		{
-			RowSum = 0,
-			IsRowValid = true
+			',', ';'
 		};
+
+		var elements = row.Split(separators);
+
+		var result = new AnalysisRowResult();
 
 		foreach (var element in elements)
 		{
 			if (double.TryParse(element, NumberStyles.Any, CultureInfo.InvariantCulture, out var number))
 			{
-				result.RowSum += number;
+				result.UpdateRowSum(number);
 			}
 			else
 			{
-				result.IsRowValid = false;
+				result.InvalidateRow();
 
 				break;
 			}

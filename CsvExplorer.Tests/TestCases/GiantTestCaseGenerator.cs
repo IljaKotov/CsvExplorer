@@ -60,7 +60,9 @@ public static class GiantTestCaseGenerator
 		}
 
 		if ((sum > _maxSum) is false)
+		{
 			return;
+		}
 
 		_maxSum = sum;
 		_maxRowIndex = rowIndex + 1;
@@ -74,7 +76,6 @@ public static class GiantTestCaseGenerator
 				.OrderBy(x => x.Key)
 				.Select(x => x.Value)
 				.ToArray(),
-			
 			MinSum = _minSum,
 			MaxSum = _maxSum,
 			MinRowIndex = _minRowIndex,
