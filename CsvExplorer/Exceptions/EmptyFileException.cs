@@ -1,4 +1,4 @@
-﻿namespace CSVExplorer.Exceptions;
+﻿namespace CsvExplorer.Exceptions;
 
 public class EmptyFileException : Exception
 {

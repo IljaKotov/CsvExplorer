@@ -1,15 +1,21 @@
-﻿using CSVExplorer.Interfaces;
+﻿using CsvExplorer.Interfaces;
+using CsvExplorer.Models;
+using Microsoft.Extensions.Options;
 
-namespace CSVExplorer.Providers;
+namespace CsvExplorer.Providers;
 
 internal class ConsoleFilePathProvider : IFilePathProvider
 {
+	private readonly MessageOptions _messages;
+
+	public ConsoleFilePathProvider(IOptions<MessageOptions> messageOptions)
+	{
+		_messages = messageOptions.Value;
+	}
+
 	public string GetFilePath()
 	{
-		const string inviteToEnterPath = "Please enter the full path to the CSV file:";
-
-		Console.WriteLine(inviteToEnterPath);
-
+		Console.WriteLine(_messages.InviteToEnterPath);
 		var filePath = Console.ReadLine();
 
 		ArgumentException.ThrowIfNullOrWhiteSpace(filePath);

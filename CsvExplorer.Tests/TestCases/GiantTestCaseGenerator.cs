@@ -1,7 +1,7 @@
 ﻿using System.Text;
 using Bogus;
 
-namespace CSVExplorer.Tests.TestCases;
+namespace CsvExplorer.Tests.TestCases;
 
 public static class GiantTestCaseGenerator
 {

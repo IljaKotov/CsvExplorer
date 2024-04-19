@@ -1,19 +1,19 @@
 ﻿using System.Globalization;
-using CSVExplorer.Interfaces;
-using CSVExplorer.Models;
+using CsvExplorer.Interfaces;
+using CsvExplorer.Models;
 
-namespace CSVExplorer.Services;
+namespace CsvExplorer.Services;
 
 internal class RowAnalyzer : IRowAnalyzer
 {
+	private static readonly char[] _separators =
+	{
+		',', ';'
+	};
+
 	public AnalysisRowResult TryGetRowSum(string row)
 	{
-		var separators = new[]
-		{
-			',', ';'
-		};
-
-		var elements = row.Split(separators);
+		var elements = row.Split(_separators);
 
 		var result = new AnalysisRowResult();
 

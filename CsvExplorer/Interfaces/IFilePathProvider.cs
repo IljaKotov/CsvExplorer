@@ -1,4 +1,4 @@
-﻿namespace CSVExplorer.Interfaces;
+﻿namespace CsvExplorer.Interfaces;
 
 public interface IFilePathProvider
 {

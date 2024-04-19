@@ -1,38 +1,48 @@
-﻿using CSVExplorer.Interfaces;
-using CSVExplorer.Models;
+﻿using CsvExplorer.Interfaces;
+using CsvExplorer.Models;
+using Microsoft.Extensions.Options;
 
-namespace CSVExplorer.Utilities;
+namespace CsvExplorer.Utilities;
 
 internal class ConsolePrintResult : IConsolePrintResult
 {
+	private readonly MessageOptions _messages;
+
+	public ConsolePrintResult(IOptions<MessageOptions> messageOptions)
+	{
+		_messages = messageOptions.Value;
+	}
+
 	public void PrintAllResults(AnalysisResult result)
 	{
 		PrintMinSum(result.MinIndex, result.MinRowSum);
 		PrintMaxSum(result.MaxIndex, result.MaxRowSum);
 
 		if (result.InvalidRowsIndexes is not null)
+		{
 			PrintNonNumericRows(result.InvalidRowsIndexes);
+		}
 	}
 
-	private static void PrintMaxSum(int rowNumber, double sum)
+	private void PrintMaxSum(int rowNumber, double sum)
 	{
 		Console.WriteLine(rowNumber != -1
-			? $"\t Row {rowNumber} has the maximum sum of {sum}"
-			: "\t There are no valid rows in the file");
+			? string.Format(_messages.MaxSumMessage, rowNumber, sum)
+			: _messages.NoValidRowsMessage);
 	}
 
-	private static void PrintMinSum(int rowNumber, double sum)
+	private void PrintMinSum(int rowNumber, double sum)
 	{
 		Console.WriteLine(rowNumber != -1
-			? $"\t Row {rowNumber} has the minimum sum of {sum}"
-			: "\t There are no valid rows in the file");
+			? string.Format(_messages.MinSumMessage, rowNumber, sum)
+			: _messages.NoValidRowsMessage);
 	}
 
-	private static void PrintNonNumericRows(List<int> rowNumbers)
+	private void PrintNonNumericRows(List<int> rowNumbers)
 	{
-		Console.WriteLine("\t The following rows contain non-numeric elements:");
+		Console.WriteLine(_messages.NonNumericRowsMessage);
 
 		foreach (var rowNumber in rowNumbers)
-			Console.WriteLine($"\t \t row {rowNumber}");
+			Console.WriteLine(_messages.NonNumericRowMessage, rowNumber);
 	}
 }

@@ -1,6 +1,6 @@
-﻿using CSVExplorer.Interfaces;
+﻿using CsvExplorer.Interfaces;
 
-namespace CSVExplorer.Utilities;
+namespace CsvExplorer.Utilities;
 
 public class AnalyzerRunner : IAnalyzerRunner
 {
@@ -19,9 +19,9 @@ public class AnalyzerRunner : IAnalyzerRunner
 
 	public async Task RunAsync(string filePath)
 	{
-		var lines = _fileDataService.GetAllFileRows(filePath);
+		var lines = _fileDataService.GetAllFileRowsAsync(filePath);
 
-		var result = await _fileDataAnalyzer.Analyze(lines);
+		var result = await _fileDataAnalyzer.AnalyzeAsync(lines);
 
 		_printResult.PrintAllResults(result);
 	}

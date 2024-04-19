@@ -1,10 +1,10 @@
-﻿using CSVExplorer.Interfaces;
+﻿using CsvExplorer.Interfaces;
 
-namespace CSVExplorer.Services;
+namespace CsvExplorer.Services;
 
 internal class FileDataService : IFileDataService
 {
-	public async IAsyncEnumerable<string> GetAllFileRows(string filePath)
+	public async IAsyncEnumerable<string> GetAllFileRowsAsync(string filePath)
 	{
 		if (File.Exists(filePath) is false)
 		{

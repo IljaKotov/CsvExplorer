@@ -1,8 +1,8 @@
-﻿using CSVExplorer.Exceptions;
-using CSVExplorer.Interfaces;
-using CSVExplorer.Models;
+﻿using CsvExplorer.Exceptions;
+using CsvExplorer.Interfaces;
+using CsvExplorer.Models;
 
-namespace CSVExplorer.Services;
+namespace CsvExplorer.Services;
 
 internal class FileDataAnalyzer : IFileDataAnalyzer
 {
@@ -18,7 +18,7 @@ internal class FileDataAnalyzer : IFileDataAnalyzer
 		_rowAnalyzer = rowAnalyzer;
 	}
 
-	public async Task<AnalysisResult> Analyze(IAsyncEnumerable<string> csvRows)
+	public async Task<AnalysisResult> AnalyzeAsync(IAsyncEnumerable<string> csvRows)
 	{
 		var rowIndex = 0;
 		var hasRows = false;

@@ -1,8 +1,8 @@
-﻿using CSVExplorer.Models;
+﻿using CsvExplorer.Models;
 
-namespace CSVExplorer.Interfaces;
+namespace CsvExplorer.Interfaces;
 
 public interface IFileDataAnalyzer
 {
-	public Task<AnalysisResult> Analyze(IAsyncEnumerable<string> csvRows);
+	Task<AnalysisResult> AnalyzeAsync(IAsyncEnumerable<string> csvRows);
 }

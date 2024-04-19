@@ -1,6 +1,6 @@
-﻿using CSVExplorer.Models;
+﻿using CsvExplorer.Models;
 
-namespace CSVExplorer.Interfaces;
+namespace CsvExplorer.Interfaces;
 
 public interface IConsolePrintResult
 {

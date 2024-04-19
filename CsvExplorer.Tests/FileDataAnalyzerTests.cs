@@ -1,11 +1,11 @@
 ﻿using System.ComponentModel;
-using CSVExplorer.Exceptions;
-using CSVExplorer.Interfaces;
-using CSVExplorer.Services;
-using CSVExplorer.Tests.TestCases;
+using CsvExplorer.Exceptions;
+using CsvExplorer.Interfaces;
+using CsvExplorer.Services;
+using CsvExplorer.Tests.TestCases;
 using FluentAssertions;
 
-namespace CSVExplorer.Tests;
+namespace CsvExplorer.Tests;
 
 public class FileDataAnalyzerTests
 {
@@ -17,7 +17,7 @@ public class FileDataAnalyzerTests
 	public async Task Analyze_EmptyData_ThrowsException()
 	{
 		var rows = new List<string>().ToAsyncEnumerable();
-		await Assert.ThrowsAsync<EmptyFileException>(() => _fileDataAnalyzer.Analyze(rows));
+		await Assert.ThrowsAsync<EmptyFileException>(() => _fileDataAnalyzer.AnalyzeAsync(rows));
 	}
 
 	[Fact]
@@ -29,7 +29,7 @@ public class FileDataAnalyzerTests
 		var provider = new FileDataService();
 
 		await Assert.ThrowsAsync<FileNotFoundException>(() =>
-			Task.Run(async () => await provider.GetAllFileRows(filePath).ToListAsync()));
+			Task.Run(async () => await provider.GetAllFileRowsAsync(filePath).ToListAsync()));
 	}
 
 	[Theory]
@@ -38,7 +38,7 @@ public class FileDataAnalyzerTests
 		MemberType = typeof(TestCaseGenerator))]
 	public async Task Analyze_SomeDataCases_ReturnsCorrectResult(TestCase testCase)
 	{
-		var result = await _fileDataAnalyzer.Analyze(testCase.InputRows.ToAsyncEnumerable());
+		var result = await _fileDataAnalyzer.AnalyzeAsync(testCase.InputRows.ToAsyncEnumerable());
 
 		result.MinRowSum.Should().Be(testCase.MinSum);
 		result.MaxRowSum.Should().Be(testCase.MaxSum);

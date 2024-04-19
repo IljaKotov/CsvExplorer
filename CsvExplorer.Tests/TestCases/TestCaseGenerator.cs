@@ -1,4 +1,4 @@
-﻿namespace CSVExplorer.Tests.TestCases;
+﻿namespace CsvExplorer.Tests.TestCases;
 
 public static class TestCaseGenerator
 {

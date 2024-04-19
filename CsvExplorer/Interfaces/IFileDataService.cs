@@ -1,6 +1,6 @@
-﻿namespace CSVExplorer.Interfaces;
+﻿namespace CsvExplorer.Interfaces;
 
 public interface IFileDataService
 {
-	public IAsyncEnumerable<string> GetAllFileRows(string filePath);
+	IAsyncEnumerable<string> GetAllFileRowsAsync(string filePath);
 }

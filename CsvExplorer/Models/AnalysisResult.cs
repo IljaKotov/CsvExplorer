@@ -1,4 +1,4 @@
-﻿namespace CSVExplorer.Models;
+﻿namespace CsvExplorer.Models;
 
 public record AnalysisResult
 {

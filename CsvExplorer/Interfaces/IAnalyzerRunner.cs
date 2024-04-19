@@ -1,6 +1,6 @@
-﻿namespace CSVExplorer.Interfaces;
+﻿namespace CsvExplorer.Interfaces;
 
 public interface IAnalyzerRunner
 {
-	public Task RunAsync(string filePath);
+	Task RunAsync(string filePath);
 }
