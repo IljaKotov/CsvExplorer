@@ -15,10 +15,20 @@ internal class ConsoleFilePathProvider : IFilePathProvider
 
 	public string GetFilePath()
 	{
-		Console.WriteLine(_messages.InviteToEnterPath);
-		var filePath = Console.ReadLine();
+		string? filePath;
 
-		ArgumentException.ThrowIfNullOrWhiteSpace(filePath);
+		while (true)
+		{
+			Console.WriteLine(_messages.InviteToEnterPath);
+			filePath = Console.ReadLine();
+
+			if (string.IsNullOrWhiteSpace(filePath) is false && File.Exists(filePath))
+			{
+				break;
+			}
+
+			Console.WriteLine(_messages.InvalidPathMessage);
+		}
 
 		return filePath;
 	}

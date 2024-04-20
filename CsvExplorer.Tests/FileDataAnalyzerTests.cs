@@ -29,7 +29,7 @@ public class FileDataAnalyzerTests
 		var provider = new FileDataService();
 
 		await Assert.ThrowsAsync<FileNotFoundException>(() =>
-			Task.Run(async () => await provider.GetAllFileRowsAsync(filePath).ToListAsync()));
+			Task.Run(async () => await provider.EnumerateAllFileRowsAsync(filePath).ToListAsync()));
 	}
 
 	[Theory]

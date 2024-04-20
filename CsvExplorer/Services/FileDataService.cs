@@ -4,12 +4,10 @@ namespace CsvExplorer.Services;
 
 internal class FileDataService : IFileDataService
 {
-	public async IAsyncEnumerable<string> GetAllFileRowsAsync(string filePath)
+	public async IAsyncEnumerable<string> EnumerateAllFileRowsAsync(string filePath)
 	{
 		if (File.Exists(filePath) is false)
-		{
 			throw new FileNotFoundException();
-		}
 
 		using var reader = new StreamReader(filePath);
 

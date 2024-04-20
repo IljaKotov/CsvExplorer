@@ -9,12 +9,9 @@ using Microsoft.Extensions.DependencyInjection;
 
 var builder = CoconaApp.CreateBuilder();
 
-var configuration = new ConfigurationBuilder()
-	.SetBasePath(Directory.GetCurrentDirectory())
-	.AddJsonFile("appsettings.json", true, true)
-	.Build();
+builder.Configuration.AddJsonFile("appsettings.json", true, true);
+builder.Services.Configure<MessageOptions>(builder.Configuration.GetSection("Messages"));
 
-builder.Services.Configure<MessageOptions>(configuration.GetSection("Messages"));
 builder.Services.AddTransient<IConsolePrintResult, ConsolePrintResult>();
 builder.Services.AddTransient<IFilePathProvider, ConsoleFilePathProvider>();
 builder.Services.AddTransient<IFileDataService, FileDataService>();

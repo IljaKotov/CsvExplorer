@@ -2,5 +2,5 @@
 
 public interface IFileDataService
 {
-	IAsyncEnumerable<string> GetAllFileRowsAsync(string filePath);
+	IAsyncEnumerable<string> EnumerateAllFileRowsAsync(string filePath);
 }

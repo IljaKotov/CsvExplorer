@@ -19,7 +19,7 @@ public class AnalyzerRunner : IAnalyzerRunner
 
 	public async Task RunAsync(string filePath)
 	{
-		var lines = _fileDataService.GetAllFileRowsAsync(filePath);
+		var lines = _fileDataService.EnumerateAllFileRowsAsync(filePath);
 
 		var result = await _fileDataAnalyzer.AnalyzeAsync(lines);
 
