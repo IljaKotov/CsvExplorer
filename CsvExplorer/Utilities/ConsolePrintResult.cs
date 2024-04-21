@@ -6,7 +6,7 @@ namespace CsvExplorer.Utilities;
 
 internal class ConsolePrintResult : IConsolePrintResult
 {
-	private const int NoValidRow = -1;
+	private const int InvalidRow = -1;
 	private readonly MessageOptions _messages;
 
 	public ConsolePrintResult(IOptions<MessageOptions> messageOptions)
@@ -27,14 +27,14 @@ internal class ConsolePrintResult : IConsolePrintResult
 
 	private void PrintMaxSum(int rowNumber, double sum)
 	{
-		Console.WriteLine(rowNumber is not NoValidRow
+		Console.WriteLine(rowNumber is not InvalidRow
 			? string.Format(_messages.MaxSumMessage, rowNumber, sum)
 			: _messages.NoValidRowsMessage);
 	}
 
 	private void PrintMinSum(int rowNumber, double sum)
 	{
-		Console.WriteLine(rowNumber is not NoValidRow
+		Console.WriteLine(rowNumber is not InvalidRow
 			? string.Format(_messages.MinSumMessage, rowNumber, sum)
 			: _messages.NoValidRowsMessage);
 	}

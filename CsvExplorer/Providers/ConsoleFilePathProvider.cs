@@ -17,7 +17,7 @@ internal class ConsoleFilePathProvider : IFilePathProvider
 	{
 		string? filePath;
 
-		while (true)
+		do
 		{
 			Console.WriteLine(_messages.InviteToEnterPath);
 			filePath = Console.ReadLine();
@@ -28,7 +28,7 @@ internal class ConsoleFilePathProvider : IFilePathProvider
 			}
 
 			Console.WriteLine(_messages.InvalidPathMessage);
-		}
+		} while (true);
 
 		return filePath;
 	}
